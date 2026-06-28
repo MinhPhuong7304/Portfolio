@@ -21,6 +21,11 @@ const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
 // Define Models
 export const Profile = sequelize.define('Profile', {
   name: { type: DataTypes.STRING, allowNull: false },
+  avatar: { type: DataTypes.TEXT },
+  cv: { type: DataTypes.TEXT },
+  cv_frontend: { type: DataTypes.TEXT },
+  cv_tester: { type: DataTypes.TEXT },
+  years_of_exp: { type: DataTypes.STRING, defaultValue: '2' },
   greeting_vi: { type: DataTypes.STRING, defaultValue: 'Xin chào, mình là' },
   greeting_en: { type: DataTypes.STRING, defaultValue: 'Hi there, I am' },
   title_frontend_vi: { type: DataTypes.STRING, defaultValue: 'Frontend Developer' },
@@ -54,7 +59,20 @@ export const Profile = sequelize.define('Profile', {
 export const Skill = sequelize.define('Skill', {
   name: { type: DataTypes.STRING, allowNull: false },
   level: { type: DataTypes.STRING, defaultValue: 'intermediate' }, // advanced, intermediate, basic
-  type: { type: DataTypes.STRING, defaultValue: 'frontend' } // frontend, tester
+  type: { type: DataTypes.STRING, defaultValue: 'frontend' }, // frontend, tester
+  icon: { type: DataTypes.STRING }
+});
+
+export const Experience = sequelize.define('Experience', {
+  company_vi: { type: DataTypes.STRING, allowNull: false },
+  company_en: { type: DataTypes.STRING, allowNull: false },
+  role_vi: { type: DataTypes.STRING, allowNull: false },
+  role_en: { type: DataTypes.STRING, allowNull: false },
+  duration_vi: { type: DataTypes.STRING, allowNull: false },
+  duration_en: { type: DataTypes.STRING, allowNull: false },
+  description_vi: { type: DataTypes.TEXT },
+  description_en: { type: DataTypes.TEXT },
+  type: { type: DataTypes.STRING, defaultValue: 'frontend' } // frontend, tester, education
 });
 
 export const Project = sequelize.define('Project', {
@@ -79,7 +97,22 @@ export const Project = sequelize.define('Project', {
   artifactLink: { type: DataTypes.STRING },
   artifactName: { type: DataTypes.STRING },
   detailDescription_vi: { type: DataTypes.TEXT },
-  detailDescription_en: { type: DataTypes.TEXT }
+  detailDescription_en: { type: DataTypes.TEXT },
+  imageUrl: { type: DataTypes.STRING },
+  role: { type: DataTypes.STRING },
+  timeline: { type: DataTypes.STRING },
+  keyFeatures_vi: { type: DataTypes.TEXT },
+  keyFeatures_en: { type: DataTypes.TEXT },
+  challenge_vi: { type: DataTypes.TEXT },
+  challenge_en: { type: DataTypes.TEXT },
+  solution_vi: { type: DataTypes.TEXT },
+  solution_en: { type: DataTypes.TEXT },
+  testPlan_vi: { type: DataTypes.TEXT },
+  testPlan_en: { type: DataTypes.TEXT },
+  bugReport_vi: { type: DataTypes.TEXT },
+  bugReport_en: { type: DataTypes.TEXT },
+  automationResults_vi: { type: DataTypes.TEXT },
+  automationResults_en: { type: DataTypes.TEXT }
 });
 
 export const Certificate = sequelize.define('Certificate', {
@@ -102,9 +135,9 @@ export const initDB = async () => {
     await sequelize.authenticate();
     console.log('✓ Successfully connected to PostgreSQL.');
     
-    // Force: false to prevent dropping tables if they already exist
-    await sequelize.sync({ force: false });
-    console.log('✓ Database tables synchronized.');
+    // Use alter: true to automatically add the new avatar column without losing data
+    await sequelize.sync({ alter: true });
+    console.log('✓ Database tables synchronized (with alter).');
 
     // Seed default Profile if empty
     const count = await Profile.count();
@@ -230,6 +263,75 @@ export const initDB = async () => {
         }
       ]);
       console.log('✓ Seeded default certificates.');
+    }
+    
+    // Automatically update existing skills with icons if they are null
+    const defaultIcons = [
+      { name: 'ReactJS', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg' },
+      { name: 'JavaScript (ES6+)', icon: 'https://cdn.jsdelivr.net/gh/gilbarbara/logos@master/logos/javascript.svg' },
+      { name: 'HTML5 & CSS3', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg' },
+      { name: 'Tailwind CSS', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg' },
+      { name: 'Vite / Webpack', icon: 'https://cdn.jsdelivr.net/gh/gilbarbara/logos@master/logos/vite.svg' },
+      { name: 'Git & GitHub', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg' },
+      { name: 'API Testing (Postman)', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-original.svg' },
+      { name: 'Automation (Cypress)', icon: 'https://cdn.jsdelivr.net/gh/gilbarbara/logos@master/logos/cypress.svg' },
+      { name: 'Jira / Redmine', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jira/jira-original.svg' },
+      { name: 'SQL (Database Query)', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg' }
+    ];
+    for (const item of defaultIcons) {
+      await Skill.update({ icon: item.icon }, { where: { name: item.name, icon: null } });
+    }
+
+    // Seed default Experiences if empty
+    const expCount = await Experience.count();
+    if (expCount === 0) {
+      await Experience.bulkCreate([
+        {
+          company_vi: 'Đại học Công nghệ Sài Gòn (STU)',
+          company_en: 'Saigon Technology University',
+          role_vi: 'Sinh viên ngành Công nghệ Thông tin',
+          role_en: 'Student in Information Technology',
+          duration_vi: 'Tháng 09/2021 - Tháng 05/2025',
+          duration_en: 'September 2021 - May 2025',
+          description_vi: 'Tích lũy nền tảng vững chắc về lập trình, giải thuật, cơ sở dữ liệu, mạng máy tính.\nHoàn thành tốt nghiệp với đề tài liên quan đến phát triển hệ thống web thời gian thực.',
+          description_en: 'Acquired solid foundation in programming, algorithms, databases, computer networks.\nGraduated with graduation project focused on real-time web application development.',
+          type: 'education'
+        },
+        {
+          company_vi: 'Công ty Công nghệ XYZ (XYZ Tech)',
+          company_en: 'XYZ Tech Company',
+          role_vi: 'Thực tập sinh Lập trình Frontend',
+          role_en: 'Frontend Developer Intern',
+          duration_vi: 'Tháng 06/2025 - Tháng 08/2025',
+          duration_en: 'June 2025 - August 2025',
+          description_vi: 'Tham gia xây dựng giao diện ứng dụng quản lý doanh nghiệp.\nLàm quen quy trình làm việc Agile/Scrum với Git và các thư viện UI React.',
+          description_en: 'Participated in developing dashboard user interfaces for enterprise management systems.\nExperienced Agile/Scrum workflows using Git and various React UI libraries.',
+          type: 'frontend'
+        },
+        {
+          company_vi: 'Công ty Giải pháp Phần mềm ABC (ABC Solutions)',
+          company_en: 'ABC Software Solutions',
+          role_vi: 'Thực tập sinh Kiểm thử Phần mềm (QA/QC)',
+          role_en: 'Software Tester Intern (QA/QC)',
+          duration_vi: 'Tháng 09/2025 - Tháng 11/2025',
+          duration_en: 'September 2025 - November 2025',
+          description_vi: 'Phân tích yêu cầu và viết hơn 150+ ca kiểm thử chức năng.\nThực hiện kiểm thử thủ công và học viết automation kịch bản Cypress/Postman.',
+          description_en: 'Analyzed user requirements and drafted over 150+ functional test cases.\nPerformed manual testing cycles and learned test automation using Cypress and Postman.',
+          type: 'tester'
+        }
+      ]);
+      console.log('✓ Seeded default experiences.');
+    }
+
+    // Migrate single CV column to double CV columns if empty
+    const profiles = await Profile.findAll();
+    for (const p of profiles) {
+      if (p.cv && (!p.cv_frontend || !p.cv_tester)) {
+        await p.update({
+          cv_frontend: p.cv_frontend || p.cv,
+          cv_tester: p.cv_tester || p.cv
+        });
+      }
     }
   } catch (error) {
     console.error('✗ Failed to initialize PostgreSQL Database:', error);

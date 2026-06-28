@@ -1,4 +1,4 @@
-import { Profile, Skill, Project, Certificate, Message } from '../models/db.js';
+import { Profile, Skill, Project, Certificate, Message, Experience } from '../models/db.js';
 
 // Get all portfolio data for public page
 export const getPortfolioData = async (req, res) => {
@@ -7,13 +7,15 @@ export const getPortfolioData = async (req, res) => {
     const skills = await Skill.findAll({ order: [['id', 'ASC']] });
     const projects = await Project.findAll({ order: [['id', 'ASC']] });
     const certificates = await Certificate.findAll({ order: [['id', 'ASC']] });
+    const experiences = await Experience.findAll({ order: [['id', 'ASC']] });
 
     // Format data to match what the frontend expects
     const formattedData = {
       profile: profile || {},
       skills: skills || [],
       projects: projects || [],
-      certificates: certificates || []
+      certificates: certificates || [],
+      experiences: experiences || []
     };
 
     return res.status(200).json({
@@ -196,6 +198,40 @@ export const deleteMessage = async (req, res) => {
     if (!message) return res.status(404).json({ success: false, message: 'Message not found' });
     await message.destroy();
     return res.status(200).json({ success: true, message: '✓ Message deleted' });
+  } catch (error) {
+    return res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+// Experiences API
+export const createExperience = async (req, res) => {
+  try {
+    const experience = await Experience.create(req.body);
+    return res.status(201).json({ success: true, data: experience });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: '✗ Failed to create experience', error: error.message });
+  }
+};
+
+export const updateExperience = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const experience = await Experience.findByPk(id);
+    if (!experience) return res.status(404).json({ success: false, message: 'Experience not found' });
+    await experience.update(req.body);
+    return res.status(200).json({ success: true, data: experience });
+  } catch (error) {
+    return res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+export const deleteExperience = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const experience = await Experience.findByPk(id);
+    if (!experience) return res.status(404).json({ success: false, message: 'Experience not found' });
+    await experience.destroy();
+    return res.status(200).json({ success: true, message: '✓ Experience deleted' });
   } catch (error) {
     return res.status(500).json({ success: false, error: error.message });
   }
