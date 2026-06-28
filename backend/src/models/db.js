@@ -360,6 +360,10 @@ export const initDB = async () => {
         });
       }
     }
+
+    // Ensure all existing Projects and Certificates have isHidden = false if they are null
+    await Project.update({ isHidden: false }, { where: { isHidden: null } });
+    await Certificate.update({ isHidden: false }, { where: { isHidden: null } });
   } catch (error) {
     console.error('✗ Failed to initialize PostgreSQL Database:', error);
   }
