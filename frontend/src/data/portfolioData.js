@@ -15,7 +15,10 @@ export const portfolioData = {
       subtitleFrontend: "Đam mê thiết kế và xây dựng những giao diện người dùng (UI/UX) đẹp mắt, tương tác mượt mà và tối ưu hóa hiệu năng sản phẩm.",
       subtitleTester: "Tập trung đảm bảo chất lượng và độ tin cậy của phần mềm thông qua các phương pháp kiểm thử thủ công và tự động hóa toàn diện.",
       toggleFrontend: "Góc nhìn Dev",
-      toggleTester: "Góc nhìn Tester"
+      toggleTester: "Góc nhìn Tester",
+      contactBtn: "Liên hệ với mình",
+      projectsBtnFrontend: "Xem sản phẩm",
+      projectsBtnTester: "Xem test suites"
     },
     about: {
       title: "Về Mình",
@@ -40,22 +43,22 @@ export const portfolioData = {
         basic: "Cơ bản"
       },
       frontend: [
-        { name: "ReactJS", level: "Intermediate" },
-        { name: "JavaScript (ES6+)", level: "Advanced" },
-        { name: "HTML5 & CSS3", level: "Advanced" },
-        { name: "Tailwind CSS", level: "Advanced" },
-        { name: "Vite / Webpack", level: "Advanced" },
-        { name: "Git & GitHub", level: "Advanced" },
+        { name: "ReactJS", level: "Intermediate", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" },
+        { name: "JavaScript (ES6+)", level: "Advanced", icon: "https://cdn.jsdelivr.net/gh/gilbarbara/logos@master/logos/javascript.svg" },
+        { name: "HTML5 & CSS3", level: "Advanced", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" },
+        { name: "Tailwind CSS", level: "Advanced", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" },
+        { name: "Vite / Webpack", level: "Advanced", icon: "https://cdn.jsdelivr.net/gh/gilbarbara/logos@master/logos/vite.svg" },
+        { name: "Git & GitHub", level: "Advanced", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" },
         { name: "RESTful APIs", level: "Intermediate" },
         { name: "Responsive UI", level: "Advanced" }
       ],
       tester: [
         { name: "Manual Testing", level: "Advanced" },
         { name: "Test Case Design", level: "Advanced" },
-        { name: "API Testing (Postman)", level: "Advanced" },
-        { name: "Automation (Cypress)", level: "Intermediate" },
-        { name: "Jira / Redmine", level: "Advanced" },
-        { name: "SQL (Database Query)", level: "Intermediate" },
+        { name: "API Testing (Postman)", level: "Advanced", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-original.svg" },
+        { name: "Automation (Cypress)", level: "Intermediate", icon: "https://cdn.jsdelivr.net/gh/gilbarbara/logos@master/logos/cypress.svg" },
+        { name: "Jira / Redmine", level: "Advanced", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jira/jira-original.svg" },
+        { name: "SQL (Database Query)", level: "Intermediate", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" },
         { name: "STLC & SDLC", level: "Advanced" },
         { name: "Agile / Scrum", level: "Advanced" }
       ]
@@ -132,7 +135,10 @@ export const portfolioData = {
       subtitleFrontend: "Passionate about designing and building beautiful, smooth user interfaces (UI/UX) with optimized web performance.",
       subtitleTester: "Focused on ensuring software quality and reliability through comprehensive manual testing and test automation methodologies.",
       toggleFrontend: "Developer View",
-      toggleTester: "Tester View"
+      toggleTester: "Tester View",
+      contactBtn: "Get in touch",
+      projectsBtnFrontend: "View Projects",
+      projectsBtnTester: "View test suites"
     },
     about: {
       title: "About Me",
@@ -157,22 +163,22 @@ export const portfolioData = {
         basic: "Basic"
       },
       frontend: [
-        { name: "ReactJS", level: "Intermediate" },
-        { name: "JavaScript (ES6+)", level: "Advanced" },
-        { name: "HTML5 & CSS3", level: "Advanced" },
-        { name: "Tailwind CSS", level: "Advanced" },
-        { name: "Vite / Webpack", level: "Advanced" },
-        { name: "Git & GitHub", level: "Advanced" },
+        { name: "ReactJS", level: "Intermediate", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" },
+        { name: "JavaScript (ES6+)", level: "Advanced", icon: "https://cdn.jsdelivr.net/gh/gilbarbara/logos@master/logos/javascript.svg" },
+        { name: "HTML5 & CSS3", level: "Advanced", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" },
+        { name: "Tailwind CSS", level: "Advanced", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" },
+        { name: "Vite / Webpack", level: "Advanced", icon: "https://cdn.jsdelivr.net/gh/gilbarbara/logos@master/logos/vite.svg" },
+        { name: "Git & GitHub", level: "Advanced", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" },
         { name: "RESTful APIs", level: "Intermediate" },
         { name: "Responsive UI", level: "Advanced" }
       ],
       tester: [
         { name: "Manual Testing", level: "Advanced" },
         { name: "Test Case Design", level: "Advanced" },
-        { name: "API Testing (Postman)", level: "Advanced" },
-        { name: "Automation (Cypress)", level: "Intermediate" },
-        { name: "Jira / Redmine", level: "Advanced" },
-        { name: "SQL (Database Query)", level: "Intermediate" },
+        { name: "API Testing (Postman)", level: "Advanced", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-original.svg" },
+        { name: "Automation (Cypress)", level: "Intermediate", icon: "https://cdn.jsdelivr.net/gh/gilbarbara/logos@master/logos/cypress.svg" },
+        { name: "Jira / Redmine", level: "Advanced", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jira/jira-original.svg" },
+        { name: "SQL (Database Query)", level: "Intermediate", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" },
         { name: "STLC & SDLC", level: "Advanced" },
         { name: "Agile / Scrum", level: "Advanced" }
       ]

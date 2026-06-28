@@ -52,7 +52,11 @@ export default function Skills({ mode, text }) {
         {skillsList.map((skill, index) => (
           <div className="skill-card glass-card animate-fade-in" key={index} style={{ animationDelay: `${index * 50}ms` }}>
             <div className="skill-icon-container">
-              {getSkillIcon(skill.name)}
+              {skill.icon ? (
+                <img src={skill.icon} alt={skill.name} className="w-6 h-6 object-contain" />
+              ) : (
+                getSkillIcon(skill.name)
+              )}
             </div>
             <h3 className="skill-name">{skill.name}</h3>
             <span className={`skill-level ${skill.level.toLowerCase()}`}>

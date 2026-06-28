@@ -6,33 +6,68 @@ import About from './components/About';
 import Skills from './components/Skills';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
-import ProjectModal from './components/ProjectModal';
 import ThreeDRobot from './components/ThreeDRobot';
+import Experience from './components/Experience';
+import { API_BASE_URL } from './config';
 
 
 // Pages
 import Login from './pages/Login';
-import AdminDashboard from './pages/AdminDashboard';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import ProjectDetail from './pages/ProjectDetail';
 
 function App() {
-  const [lang, setLang] = useState('vi'); // 'vi' or 'en'
+  const [lang, setLang] = useState('en'); // 'vi' or 'en'
   const [mode, setMode] = useState('frontend'); // 'frontend' or 'tester'
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark'); // 'dark' or 'light'
   
   // Custom router state
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
 
-  // Selected project for detailed modal view
-  const [selectedProject, setSelectedProject] = useState(null);
+
 
   // Dynamic state from PostgreSQL backend
   const [profile, setProfile] = useState({});
   const [skills, setSkills] = useState([]);
   const [projects, setProjects] = useState([]);
   const [certificates, setCertificates] = useState([]);
+  const [experiences, setExperiences] = useState([]);
 
   // Local static translation text
   const text = portfolioData[lang];
+
+  // Fallback structures if API fields aren't populated yet
+  const dynamicSubtitle = mode === 'frontend' 
+    ? (lang === 'vi' ? profile.subtitle_frontend_vi : profile.subtitle_frontend_en)
+    : (lang === 'vi' ? profile.subtitle_tester_vi : profile.subtitle_tester_en);
+
+  const dynamicAboutParagraphs = mode === 'frontend'
+    ? (lang === 'vi' ? [profile.about_frontend_vi] : [profile.about_frontend_en])
+    : (lang === 'vi' ? [profile.about_tester_vi] : [profile.about_tester_en]);
+
+  // Mapped dynamic texts back into frontend layout data
+  const textProps = {
+    ...text,
+    hero: {
+      ...text.hero,
+      name: profile.name || text.hero.name,
+      subtitleFrontend: (lang === 'vi' ? profile.subtitle_frontend_vi : profile.subtitle_frontend_en) || text.hero.subtitleFrontend,
+      subtitleTester: (lang === 'vi' ? profile.subtitle_tester_vi : profile.subtitle_tester_en) || text.hero.subtitleTester
+    },
+    about: {
+      ...text.about,
+      frontend: { paragraphs: (lang === 'vi' ? profile.about_frontend_vi : profile.about_frontend_en) ? (lang === 'vi' ? profile.about_frontend_vi : profile.about_frontend_en).split('\n') : text.about.frontend.paragraphs },
+      tester: { paragraphs: (lang === 'vi' ? profile.about_tester_vi : profile.about_tester_en) ? (lang === 'vi' ? profile.about_tester_vi : profile.about_tester_en).split('\n') : text.about.tester.paragraphs }
+    },
+    skills: {
+      ...text.skills,
+      frontend: skills.filter(s => s.type === 'frontend'),
+      tester: skills.filter(s => s.type === 'tester')
+    }
+  };
+  
+  // Select CV URL based on active view mode
+  const activeCvUrl = mode === 'frontend' ? (profile.cv_frontend || profile.cv) : (profile.cv_tester || profile.cv);
 
   // Custom Router navigation handler
   const navigate = (path) => {
@@ -52,14 +87,15 @@ function App() {
   useEffect(() => {
     const fetchPortfolioData = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/portfolio');
+        const response = await fetch(`${API_BASE_URL}/api/portfolio`);
         const resData = await response.json();
         if (response.ok && resData.success) {
-          const { profile, skills, projects, certificates } = resData.data;
+          const { profile, skills, projects, certificates, experiences } = resData.data;
           setProfile(profile);
           setSkills(skills);
           setProjects(projects);
           setCertificates(certificates);
+          setExperiences(experiences || []);
         } else {
           loadFallbackLocalData();
         }
@@ -92,6 +128,44 @@ function App() {
         ...portfolioData['vi'].skills.tester.map(s => ({ ...s, type: 'tester' }))
       ];
       setSkills(mappedSkills);
+
+      // Setup Fallback experiences
+      const fallbackExperiences = [
+        {
+          company_vi: 'Đại học Công nghệ Sài Gòn (STU)',
+          company_en: 'Saigon Technology University',
+          role_vi: 'Sinh viên ngành Công nghệ Thông tin',
+          role_en: 'Student in Information Technology',
+          duration_vi: 'Tháng 09/2021 - Tháng 05/2025',
+          duration_en: 'September 2021 - May 2025',
+          description_vi: 'Tích lũy nền tảng vững chắc về lập trình, giải thuật, cơ sở dữ liệu, mạng máy tính.\nHoàn thành tốt nghiệp với đề tài liên quan đến phát triển hệ thống web thời gian thực.',
+          description_en: 'Acquired solid foundation in programming, algorithms, databases, computer networks.\nGraduated with graduation project focused on real-time web application development.',
+          type: 'education'
+        },
+        {
+          company_vi: 'Công ty Công nghệ XYZ (XYZ Tech)',
+          company_en: 'XYZ Tech Company',
+          role_vi: 'Thực tập sinh Lập trình Frontend',
+          role_en: 'Frontend Developer Intern',
+          duration_vi: 'Tháng 06/2025 - Tháng 08/2025',
+          duration_en: 'June 2025 - August 2025',
+          description_vi: 'Tham gia xây dựng giao diện ứng dụng quản lý doanh nghiệp.\nLàm quen quy trình làm việc Agile/Scrum với Git và các thư viện UI React.',
+          description_en: 'Participated in developing dashboard user interfaces for enterprise management systems.\nExperienced Agile/Scrum workflows using Git and various React UI libraries.',
+          type: 'frontend'
+        },
+        {
+          company_vi: 'Công ty Giải pháp Phần mềm ABC (ABC Solutions)',
+          company_en: 'ABC Software Solutions',
+          role_vi: 'Thực tập sinh Kiểm thử Phần mềm (QA/QC)',
+          role_en: 'Software Tester Intern (QA/QC)',
+          duration_vi: 'Tháng 09/2025 - Tháng 11/2025',
+          duration_en: 'September 2025 - November 2025',
+          description_vi: 'Phân tích yêu cầu và viết hơn 150+ ca kiểm thử chức năng.\nThực hiện kiểm thử thủ công và học viết automation kịch bản Cypress/Postman.',
+          description_en: 'Analyzed user requirements and drafted over 150+ functional test cases.\nPerformed manual testing cycles and learned test automation using Cypress and Postman.',
+          type: 'tester'
+        }
+      ];
+      setExperiences(fallbackExperiences);
 
       // Mapped fallback projects
       const mappedProjects = [
@@ -134,6 +208,28 @@ function App() {
 
   // --- RENDERING ROUTER MATCHES ---
 
+  const projectPathMatch = currentPath.match(/^\/project\/(\d+)/);
+  if (projectPathMatch) {
+    const projectId = parseInt(projectPathMatch[1], 10);
+    const project = projects.find(p => p.id === projectId);
+    if (project) {
+      return (
+        <ProjectDetail 
+          project={project} 
+          navigate={navigate} 
+          text={textProps} 
+          lang={lang}
+          setLang={setLang}
+          theme={theme}
+          setTheme={setTheme}
+          cvUrl={activeCvUrl}
+          mode={mode}
+          profile={profile}
+        />
+      );
+    }
+  }
+
   if (currentPath === '/login') {
     return <Login navigate={navigate} />;
   }
@@ -141,36 +237,6 @@ function App() {
   if (currentPath === '/admin') {
     return <AdminDashboard navigate={navigate} />;
   }
-
-  // Fallback structures if API fields aren't populated yet
-  const dynamicSubtitle = mode === 'frontend' 
-    ? (lang === 'vi' ? profile.subtitle_frontend_vi : profile.subtitle_frontend_en)
-    : (lang === 'vi' ? profile.subtitle_tester_vi : profile.subtitle_tester_en);
-
-  const dynamicAboutParagraphs = mode === 'frontend'
-    ? (lang === 'vi' ? [profile.about_frontend_vi] : [profile.about_frontend_en])
-    : (lang === 'vi' ? [profile.about_tester_vi] : [profile.about_tester_en]);
-
-  // Mapped dynamic texts back into frontend layout data
-  const textProps = {
-    ...text,
-    hero: {
-      ...text.hero,
-      name: profile.name || text.hero.name,
-      subtitleFrontend: profile.subtitle_frontend_vi || text.hero.subtitleFrontend,
-      subtitleTester: profile.subtitle_tester_vi || text.hero.subtitleTester
-    },
-    about: {
-      ...text.about,
-      frontend: { paragraphs: dynamicAboutParagraphs[0] ? dynamicAboutParagraphs[0].split('\n') : text.about.frontend.paragraphs },
-      tester: { paragraphs: dynamicAboutParagraphs[0] ? dynamicAboutParagraphs[0].split('\n') : text.about.tester.paragraphs }
-    },
-    skills: {
-      ...text.skills,
-      frontend: skills.filter(s => s.type === 'frontend'),
-      tester: skills.filter(s => s.type === 'tester')
-    }
-  };
 
   return (
     <div className="portfolio-app">
@@ -186,49 +252,69 @@ function App() {
         </div>
       </div>
 
-      <Navbar 
-        currentLang={lang} 
-        setLang={setLang} 
-        text={textProps.nav} 
-        mode={mode}
-        theme={theme}
-        setTheme={setTheme}
-      />
-      
-      <main className="main-content">
-        <Hero 
-          mode={mode} 
-          setMode={setMode} 
-          text={textProps.hero} 
-        />
-        
-        <About 
-          mode={mode} 
-          text={textProps} 
-          lang={lang}
-          projectsCount={projects.length}
-          certsCount={certificates.length}
-        />
-        
-        <Skills 
-          mode={mode} 
-          text={textProps} 
-        />
-        
-        <Projects 
-          mode={mode} 
-          text={textProps} 
-          lang={lang}
-          projects={projects}
-          certificates={certificates}
-          onOpenProject={(proj) => setSelectedProject(proj)}
-        />
-        
-        <Contact 
-          text={textProps} 
-          lang={lang}
-        />
-      </main>
+      {currentPath === '/login' ? (
+        <Login navigate={navigate} />
+      ) : currentPath === '/admin' ? (
+        <AdminDashboard navigate={navigate} />
+      ) : (
+        <>
+          <Navbar 
+            currentLang={lang} 
+            setLang={setLang} 
+            text={textProps.nav} 
+            mode={mode}
+            theme={theme}
+            setTheme={setTheme}
+            cvUrl={activeCvUrl}
+          />
+          
+          <main className="main-content">
+            <Hero 
+              mode={mode} 
+              setMode={setMode} 
+              text={textProps.hero} 
+            />
+            
+            <About 
+              mode={mode} 
+              text={textProps} 
+              lang={lang}
+              projectsCount={projects.length}
+              certsCount={certificates.length}
+              avatar={profile.avatar}
+              profile={profile}
+            />
+            
+            <Experience
+              mode={mode}
+              lang={lang}
+              experiences={experiences}
+            />
+            
+            <Skills 
+              mode={mode} 
+              text={textProps} 
+            />
+            
+            <Projects 
+              mode={mode} 
+              text={textProps} 
+              lang={lang}
+              projects={projects}
+              certificates={certificates}
+              skills={skills}
+              onOpenProject={(proj) => navigate('/project/' + proj.id)}
+            />
+            
+            <Contact 
+              text={textProps} 
+              lang={lang}
+              profile={profile}
+              cvUrl={activeCvUrl}
+            />
+          </main>
+        </>
+      )}
 
       <footer className="footer-section">
         <div className="container footer-content">
@@ -240,14 +326,6 @@ function App() {
           </p>
         </div>
       </footer>
-
-      {/* Project detail modal popups */}
-      <ProjectModal 
-        project={selectedProject} 
-        onClose={() => setSelectedProject(null)} 
-        text={textProps} 
-        lang={lang}
-      />
     </div>
   );
 }

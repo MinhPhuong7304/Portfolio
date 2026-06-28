@@ -27,6 +27,12 @@ export default function ProjectModal({ project, onClose, text, lang }) {
     ? (project.detailDescription_vi || description) 
     : (project.detailDescription_en || description);
 
+  const challenge = lang === 'vi' ? project.challenge_vi : project.challenge_en;
+  const solution = lang === 'vi' ? project.solution_vi : project.solution_en;
+  const testPlan = lang === 'vi' ? project.testPlan_vi : project.testPlan_en;
+  const bugReport = lang === 'vi' ? project.bugReport_vi : project.bugReport_en;
+  const automationResults = lang === 'vi' ? project.automationResults_vi : project.automationResults_en;
+
   return (
     <div className="project-modal-overlay">
       <div className="project-modal-container glass-card animate-fade-in">
@@ -52,8 +58,85 @@ export default function ProjectModal({ project, onClose, text, lang }) {
             
             <div className="project-modal-desc-section">
               <p className="project-modal-summary">{description}</p>
+              
+              {(project.role || project.timeline) && (
+                <div className="project-meta-info my-6 grid grid-cols-2 gap-4">
+                  {project.role && (
+                    <div>
+                      <span className="block text-[10px] text-white/50 uppercase font-bold tracking-widest mb-1">{lang === 'vi' ? 'Vai Trò' : 'Role'}</span>
+                      <p className="text-white text-sm font-semibold">{project.role}</p>
+                    </div>
+                  )}
+                  {project.timeline && (
+                    <div>
+                      <span className="block text-[10px] text-white/50 uppercase font-bold tracking-widest mb-1">{lang === 'vi' ? 'Thời Gian' : 'Timeline'}</span>
+                      <p className="text-white text-sm font-semibold">{project.timeline}</p>
+                    </div>
+                  )}
+                </div>
+              )}
+
               <h4 className="section-subtitle">{lang === 'vi' ? 'Chi Tiết Dự Án' : 'Project Breakdown'}</h4>
               <p className="project-modal-body">{detailDesc}</p>
+
+              {(project.keyFeatures_vi || project.keyFeatures_en) && (
+                <>
+                  <h4 className="section-subtitle mt-6">{lang === 'vi' ? 'Tính Năng Nổi Bật' : 'Key Features'}</h4>
+                  <ul className="list-disc pl-5 text-white/80 space-y-2 mb-6 text-sm leading-relaxed">
+                    {(lang === 'vi' ? (project.keyFeatures_vi || project.keyFeatures_en) : (project.keyFeatures_en || project.keyFeatures_vi))
+                      .split('\n')
+                      .filter(feature => feature.trim() !== '')
+                      .map((feature, idx) => (
+                        <li key={idx}>{feature.replace(/^- /, '')}</li>
+                      ))
+                    }
+                  </ul>
+                </>
+              )}
+
+              {/* Dev Case Study (Challenge & Solution) */}
+              {isFrontend && (challenge || solution) && (
+                <div className="project-case-study mt-6 space-y-4 mb-6">
+                  <h4 className="section-subtitle font-bold text-sm text-white/95 uppercase tracking-wide">{lang === 'vi' ? 'Nghiên Cứu Tình Huống' : 'Technical Case Study'}</h4>
+                  {challenge && (
+                    <div className="bg-rose-500/5 border border-rose-500/10 rounded-xl p-4">
+                      <span className="block text-[9px] text-rose-400 font-bold uppercase tracking-widest mb-1.5">{lang === 'vi' ? 'Thách Thức' : 'Challenge'}</span>
+                      <p className="text-xs text-white/80 leading-relaxed whitespace-pre-line">{challenge}</p>
+                    </div>
+                  )}
+                  {solution && (
+                    <div className="bg-emerald-500/5 border border-emerald-500/10 rounded-xl p-4">
+                      <span className="block text-[9px] text-emerald-400 font-bold uppercase tracking-widest mb-1.5">{lang === 'vi' ? 'Giải Pháp' : 'Solution'}</span>
+                      <p className="text-xs text-white/80 leading-relaxed whitespace-pre-line">{solution}</p>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* QA Tester Artifacts */}
+              {!isFrontend && (testPlan || bugReport || automationResults) && (
+                <div className="project-test-artifacts mt-6 space-y-4 mb-6">
+                  <h4 className="section-subtitle font-bold text-sm text-white/95 uppercase tracking-wide">{lang === 'vi' ? 'Hồ Sơ Kiểm Thử (Test Artifacts)' : 'QA Test Artifacts'}</h4>
+                  {testPlan && (
+                    <div className="bg-sky-500/5 border border-sky-500/10 rounded-xl p-4">
+                      <span className="block text-[9px] text-sky-400 font-bold uppercase tracking-widest mb-1.5">{lang === 'vi' ? 'Kế Hoạch & Kịch Bản Test' : 'Test Plan & Design'}</span>
+                      <p className="text-xs text-white/80 leading-relaxed whitespace-pre-line">{testPlan}</p>
+                    </div>
+                  )}
+                  {bugReport && (
+                    <div className="bg-amber-500/5 border border-amber-500/10 rounded-xl p-4">
+                      <span className="block text-[9px] text-amber-400 font-bold uppercase tracking-widest mb-1.5">{lang === 'vi' ? 'Báo Cáo Lỗi (Bug Report / Log)' : 'Bug Report / Issues Log'}</span>
+                      <p className="text-xs text-white/80 leading-relaxed whitespace-pre-line">{bugReport}</p>
+                    </div>
+                  )}
+                  {automationResults && (
+                    <div className="bg-purple-500/5 border border-purple-500/10 rounded-xl p-4">
+                      <span className="block text-[9px] text-purple-400 font-bold uppercase tracking-widest mb-1.5">{lang === 'vi' ? 'Kiểm Thử Tự Động' : 'Automation Results'}</span>
+                      <p className="text-xs text-white/80 leading-relaxed whitespace-pre-line">{automationResults}</p>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
 
             <div className="project-modal-tags-section">
@@ -119,17 +202,19 @@ export default function ProjectModal({ project, onClose, text, lang }) {
                     </div>
                     <div className="sim-url">https://{title.toLowerCase().replace(/[^a-z0-9]/g, '')}.my.id</div>
                   </div>
-                  <div className="sim-browser-body">
-                    <div className="sim-web-hero">
-                      <span className="sim-badge">{project.category.toUpperCase()}</span>
-                      <h2>{title}</h2>
-                      <div className="sim-line"></div>
-                      <div className="sim-grid">
-                        <div className="sim-box"></div>
-                        <div className="sim-box"></div>
-                        <div className="sim-box"></div>
+                  <div className="sim-browser-body" style={project.imageUrl ? { padding: 0, backgroundImage: `url(${project.imageUrl})`, backgroundSize: 'cover', backgroundPosition: 'top center' } : {}}>
+                    {!project.imageUrl && (
+                      <div className="sim-web-hero">
+                        <span className="sim-badge">{project.category.toUpperCase()}</span>
+                        <h2>{title}</h2>
+                        <div className="sim-line"></div>
+                        <div className="sim-grid">
+                          <div className="sim-box"></div>
+                          <div className="sim-box"></div>
+                          <div className="sim-box"></div>
+                        </div>
                       </div>
-                    </div>
+                    )}
                   </div>
                 </div>
 

@@ -33,7 +33,7 @@ const LinkedinIcon = () => (
   </svg>
 );
 
-export default function Contact({ text, lang }) {
+export default function Contact({ text, lang, profile, cvUrl }) {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [status, setStatus] = useState('idle'); // idle, sending, success, error
   const [errors, setErrors] = useState({});
@@ -69,7 +69,7 @@ export default function Contact({ text, lang }) {
 
     setStatus('sending');
     try {
-      const response = await fetch('http://localhost:5000/api/messages', {
+      const response = await fetch(`${API_BASE_URL}/api/messages`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
@@ -127,8 +127,8 @@ export default function Contact({ text, lang }) {
               <h4>{lang === 'vi' ? 'Hồ Sơ Năng Lực' : 'Resume / CV'}</h4>
               <p className="cv-box-desc">{text.contact.cvText}</p>
               <a 
-                href="/cv-tranminhphuong.pdf" 
-                download="CV_TranMinhPhuong.pdf" 
+                href={cvUrl || "/cv-tranminhphuong.pdf"} 
+                download={cvUrl ? cvUrl.split('/').pop() : "CV_TranMinhPhuong.pdf"} 
                 className="btn-primary cv-download-btn"
               >
                 <Download size={16} />
@@ -137,12 +137,16 @@ export default function Contact({ text, lang }) {
             </div>
 
             <div className="social-links-container">
-              <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="social-icon-btn" aria-label="GitHub">
-                <GithubIcon />
-              </a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="social-icon-btn" aria-label="LinkedIn">
-                <LinkedinIcon />
-              </a>
+              {profile?.github && (
+                <a href={profile.github} target="_blank" rel="noopener noreferrer" className="social-icon-btn" aria-label="GitHub">
+                  <GithubIcon />
+                </a>
+              )}
+              {profile?.linkedin && (
+                <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="social-icon-btn" aria-label="LinkedIn">
+                  <LinkedinIcon />
+                </a>
+              )}
             </div>
           </div>
         </div>
@@ -192,15 +196,6 @@ export default function Contact({ text, lang }) {
               {errors.message && <span className="error-text">{errors.message}</span>}
             </div>
 
-            {/* Profile Photo Mock upload button from user image */}
-            <div className="form-group">
-              <label>{lang === 'vi' ? 'Ảnh hồ sơ (Tùy chọn)' : 'Profile Photo (Optional)'}</label>
-              <div className="cyber-file-input glass-card">
-                <FileUp size={16} className="file-upload-icon" />
-                <span>{lang === 'vi' ? 'Chọn ảnh hồ sơ' : 'Choose Profile Photo'}</span>
-                <span className="file-size-limit">Max size: 5MB</span>
-              </div>
-            </div>
 
             <button
               type="submit"

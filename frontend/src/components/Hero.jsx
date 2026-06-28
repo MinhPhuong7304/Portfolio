@@ -45,10 +45,10 @@ export default function Hero({ mode, setMode, text }) {
 
         <div className="hero-actions">
           <a href="#contact" className="btn-primary">
-            {isFrontend ? 'Liên hệ với mình' : 'Get in touch'}
+            {text.contactBtn}
           </a>
           <a href="#projects" className="btn-secondary">
-            {isFrontend ? 'Xem sản phẩm' : 'View test suites'}
+            {isFrontend ? text.projectsBtnFrontend : text.projectsBtnTester}
           </a>
         </div>
       </div>

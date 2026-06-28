@@ -1,4 +1,32 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+@import "tailwindcss/theme" layer(theme);
+@import "tailwindcss/utilities" layer(utilities);
+
+@theme {
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-heading: 'Outfit', system-ui, -apple-system, sans-serif;
+  
+  --color-admin-bg: var(--admin-bg);
+  --color-admin-sidebar: var(--admin-sidebar);
+  --color-admin-card: var(--admin-card);
+  --color-admin-accent: #f97316;
+  --color-admin-accent-hover: #ea580c;
+  --color-admin-text: var(--admin-text-primary);
+  --color-admin-text-secondary: var(--admin-text-secondary);
+  --color-admin-text-muted: var(--admin-text-muted);
+  --color-admin-border: var(--admin-border);
+  --color-admin-border-strong: var(--admin-border-strong);
+  --color-admin-header-bg: var(--admin-header-bg);
+  --color-admin-card-bg: var(--admin-card-bg);
+  --color-admin-card-hover: var(--admin-card-hover);
+  --color-admin-badge-bg: var(--admin-badge-bg);
+  --color-admin-glass-bg: var(--admin-glass-bg);
+  --color-admin-input-bg: var(--admin-input-bg);
+  
+  --color-admin-btn-edit: #25273c;
+  --color-admin-btn-del: #3b1c24;
+  --color-admin-btn-del-text: #f43f5e;
+}
 
 :root {
   /* Default Colors (Dark Mode First - Dark Ruby theme inspired by screenshots) */
@@ -11,6 +39,22 @@
   --text-secondary: #9ca3af;
   --text-muted: #6b7280;
   
+  /* Admin Theme variables (Dark mode default) */
+  --admin-bg: #07090e;
+  --admin-sidebar: #0c0e16;
+  --admin-card: rgba(255, 255, 255, 0.02);
+  --admin-border: rgba(255, 255, 255, 0.05);
+  --admin-border-strong: rgba(255, 255, 255, 0.1);
+  --admin-text-primary: #ffffff;
+  --admin-text-secondary: rgba(255, 255, 255, 0.7);
+  --admin-text-muted: #9ca3af;
+  --admin-header-bg: rgba(12, 14, 22, 0.5);
+  --admin-card-bg: rgba(255, 255, 255, 0.02);
+  --admin-card-hover: rgba(255, 255, 255, 0.05);
+  --admin-badge-bg: #11131c;
+  --admin-glass-bg: rgba(12, 14, 22, 0.8);
+  --admin-input-bg: rgba(255, 255, 255, 0.03);
+
   /* Mode Specific Variables (Initialized for Frontend Mode) */
   --accent: #f43f5e; /* Rose / Ruby Accent */
   --accent-rgb: 244, 63, 94;
@@ -51,6 +95,22 @@
   --text-primary: #1e293b;
   --text-secondary: #475569;
   --text-muted: #94a3b8;
+  
+  /* Admin Theme variables (Light mode overrides) */
+  --admin-bg: #f8fafc;
+  --admin-sidebar: #ffffff;
+  --admin-card: #ffffff;
+  --admin-border: rgba(0, 0, 0, 0.06);
+  --admin-border-strong: rgba(0, 0, 0, 0.12);
+  --admin-text-primary: #0f172a;
+  --admin-text-secondary: #334155;
+  --admin-text-muted: #64748b;
+  --admin-header-bg: rgba(255, 255, 255, 0.7);
+  --admin-card-bg: #ffffff;
+  --admin-card-hover: #f1f5f9;
+  --admin-badge-bg: #f1f5f9;
+  --admin-glass-bg: rgba(255, 255, 255, 0.85);
+  --admin-input-bg: #f8fafc;
 }
 
 * {
@@ -789,8 +849,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .avatar-placeholder {
-  width: 100px;
-  height: 100px;
+  width: 180px;
+  height: 180px;
   border-radius: 50%;
   background: rgba(var(--accent-rgb), 0.1);
   border: 2px dashed rgba(var(--accent-rgb), 0.4);
@@ -1116,6 +1176,219 @@ h1, h2, h3, h4, h5, h6 {
   .projects-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* Project Rows list (1 project per row layout) */
+.project-rows-list {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.project-row-item {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 48px;
+  align-items: center;
+  padding: 32px;
+  position: relative;
+  overflow: hidden;
+}
+
+.project-row-item:hover,
+.project-detail-card:hover {
+  transform: none !important;
+}
+
+@media (max-width: 992px) {
+  .project-row-item {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 24px;
+  }
+}
+
+.project-visual-side {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+/* PC Monitor Mockup styles */
+.pc-monitor-mockup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 440px;
+  margin: 0 auto;
+  perspective: 1000px;
+}
+
+.pc-screen {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 12px;
+  border: 4px solid #1e293b;
+  background: #090d16;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), 0 0 15px rgba(var(--accent-rgb), 0.08);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.pc-screen:hover {
+  transform: rotateX(4deg) rotateY(-4deg) translateZ(8px);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 25px rgba(var(--accent-rgb), 0.25);
+  border-color: var(--accent);
+}
+
+.browser-bar {
+  height: 28px;
+  background: #0f172a;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  gap: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.browser-dots {
+  display: flex;
+  gap: 5px;
+}
+
+.browser-dots .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+.browser-dots .dot.red { background: #ef4444; }
+.browser-dots .dot.yellow { background: #f59e0b; }
+.browser-dots .dot.green { background: #10b981; }
+
+.browser-url-bar {
+  flex-grow: 1;
+  background: #1e293b;
+  border-radius: 6px;
+  height: 18px;
+  font-size: 10px;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  font-family: monospace;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.screen-content {
+  width: 100%;
+  height: calc(100% - 28px);
+  background-size: cover;
+  background-position: center top;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.screen-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(7, 9, 14, 0.5);
+  backdrop-filter: blur(1px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.85;
+  transition: opacity 0.3s ease, background 0.3s ease;
+}
+
+.pc-screen:hover .screen-overlay {
+  opacity: 1;
+  background: rgba(7, 9, 14, 0.25);
+}
+
+.launch-demo-btn {
+  background: var(--accent-gradient);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-family: var(--heading);
+  font-weight: 700;
+  font-size: 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 15px rgba(var(--accent-rgb), 0.35);
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.launch-demo-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(var(--accent-rgb), 0.55);
+}
+
+.no-demo-badge {
+  background: rgba(30, 41, 59, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: #94a3b8;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  backdrop-filter: blur(4px);
+}
+
+.screen-content.default-bg {
+  background: radial-gradient(circle at center, #1b1625 0%, #07090e 100%);
+  position: relative;
+}
+
+.screen-content.default-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(var(--accent-rgb), 0.04) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(var(--accent-rgb), 0.04) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Monitor stand details */
+.monitor-stand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.stand-neck {
+  width: 32px;
+  height: 36px;
+  background: #1e293b;
+  border-bottom: 2px solid #334155;
+  transition: background-color 0.4s ease;
+}
+
+.pc-screen:hover + .monitor-stand .stand-neck {
+  background: var(--accent);
+}
+
+.stand-base {
+  width: 130px;
+  height: 8px;
+  background: #0f172a;
+  border-radius: 4px 4px 0 0;
+  border: 2px solid #1e293b;
+  border-bottom: none;
 }
 
 .project-card {
@@ -2004,11 +2277,11 @@ h1, h2, h3, h4, h5, h6 {
 
 .login-input-wrap input {
   width: 100%;
-  background: rgba(255, 255, 255, 0.03);
+  background: transparent;
   border: 1px solid var(--border-color);
   border-radius: 8px;
   padding: 12px 16px 12px 42px;
-  color: #fff;
+  color: var(--text-primary);
   font-size: 14px;
 }
 

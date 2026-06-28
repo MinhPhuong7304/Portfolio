@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Globe, Download, Menu, X, Sun, Moon } from 'lucide-react';
 
-export default function Navbar({ currentLang, setLang, text, mode, theme, setTheme }) {
+export default function Navbar({ currentLang, setLang, text, mode, theme, setTheme, cvUrl }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -25,18 +25,20 @@ export default function Navbar({ currentLang, setLang, text, mode, theme, setThe
     setTheme(theme === 'dark' ? 'light' : 'dark');
   };
 
+  const isHomePage = window.location.pathname === '/';
+
   const navItems = [
-    { label: text.about, href: '#about' },
-    { label: text.skills, href: '#skills' },
-    { label: text.projects, href: '#projects' },
-    { label: text.contact, href: '#contact' },
+    { label: text.about, href: isHomePage ? '#about' : '/#about' },
+    { label: text.skills, href: isHomePage ? '#skills' : '/#skills' },
+    { label: text.projects, href: isHomePage ? '#projects' : '/#projects' },
+    { label: text.contact, href: isHomePage ? '#contact' : '/#contact' },
   ];
 
   return (
     <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
       <div className="container nav-container">
-        <a href="#" className="nav-logo">
-          TMP<span className="dot">.</span>
+        <a href="#" className="nav-logo">PORTFOLIO
+          <span className="dot">.</span>
           <span className="logo-badge">{mode === 'frontend' ? 'DEV' : 'QA'}</span>
         </a>
 
@@ -47,7 +49,7 @@ export default function Navbar({ currentLang, setLang, text, mode, theme, setThe
               {item.label}
             </a>
           ))}
-          
+
           <button onClick={toggleLang} className="btn-lang" aria-label="Toggle language">
             <Globe size={16} />
             <span>{currentLang === 'vi' ? 'EN' : 'VI'}</span>
@@ -57,7 +59,11 @@ export default function Navbar({ currentLang, setLang, text, mode, theme, setThe
             {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
           </button>
 
-          <a href="#contact" className="nav-cv-btn">
+          <a 
+            href={cvUrl || "/cv-tranminhphuong.pdf"} 
+            download={cvUrl ? cvUrl.split('/').pop() : "CV_TranMinhPhuong.pdf"}
+            className="nav-cv-btn"
+          >
             <Download size={15} />
             <span>{text.downloadCv}</span>
           </a>
@@ -73,7 +79,7 @@ export default function Navbar({ currentLang, setLang, text, mode, theme, setThe
           <button onClick={toggleTheme} className="btn-theme" aria-label="Toggle theme">
             {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
           </button>
-          
+
           <button className="nav-toggle" onClick={() => setIsOpen(!isOpen)} aria-label="Toggle menu">
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -93,7 +99,8 @@ export default function Navbar({ currentLang, setLang, text, mode, theme, setThe
           </a>
         ))}
         <a
-          href="#contact"
+          href={cvUrl || "/cv-tranminhphuong.pdf"} 
+          download={cvUrl ? cvUrl.split('/').pop() : "CV_TranMinhPhuong.pdf"}
           className="nav-cv-btn mobile-cv-btn"
           onClick={() => setIsOpen(false)}
         >
