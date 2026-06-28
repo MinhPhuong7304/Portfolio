@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Edit2, Trash2, Search, ExternalLink, Code2, FileUp } from 'lucide-react';
+import { Plus, Edit2, Trash2, Search, ExternalLink, Code2, FileUp, Eye, EyeOff } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { API_BASE_URL } from '../../../config';
 
@@ -258,12 +258,18 @@ export default function ProjectsTab({ projects, handleAddProject, handleDeletePr
       <motion.div variants={container} initial="hidden" animate="show" className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <AnimatePresence>
           {projects.map((proj) => (
-            <motion.div variants={item} layout key={proj.id} exit={{ opacity: 0, scale: 0.9 }} whileHover={{ y: -8 }} className="bg-admin-card rounded-3xl overflow-hidden border border-admin-border hover:border-admin-border-strong transition-all flex flex-col group shadow-xl shadow-black/50">
+            <motion.div variants={item} layout key={proj.id} exit={{ opacity: 0, scale: 0.9 }} whileHover={{ y: -8 }} className={`bg-admin-card rounded-3xl overflow-hidden border transition-all flex flex-col group shadow-xl shadow-black/50 ${proj.isHidden ? 'border-amber-500/30 opacity-75' : 'border-admin-border hover:border-admin-border-strong'}`}>
               <div className="h-56 bg-admin-input-bg w-full relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-admin-accent/20 to-transparent group-hover:scale-110 transition-transform duration-700"></div>
                 <div className="absolute inset-0 flex items-center justify-center backdrop-blur-[2px]">
                    <span className="text-admin-text/20 font-black text-4xl tracking-widest uppercase rotate-[-5deg]">{proj.category}</span>
                 </div>
+                {proj.isHidden && (
+                  <div className="absolute top-5 left-5 bg-amber-500 text-white px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-lg z-20">
+                    <EyeOff size={12} />
+                    <span>Đang ẩn</span>
+                  </div>
+                )}
                 <div className="absolute top-5 right-5 flex gap-3 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-[-10px] group-hover:translate-y-0">
                   {proj.github && <a href={proj.github} target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center text-white hover:bg-admin-accent hover:scale-110 transition-all"><Code2 size={16} /></a>}
                   {proj.demo && <a href={proj.demo} target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center text-white hover:bg-admin-accent hover:scale-110 transition-all"><ExternalLink size={16} /></a>}
@@ -278,9 +284,13 @@ export default function ProjectsTab({ projects, handleAddProject, handleDeletePr
                     <span key={i} className="px-3 py-1.5 rounded-lg bg-admin-input-bg text-admin-text-secondary text-xs font-bold border border-admin-border">{tag}</span>
                   ))}
                 </div>
-                <div className="grid grid-cols-2 gap-4 mt-auto">
-                  <button onClick={() => handleEditClick(proj)} className="flex items-center justify-center gap-2 py-3 rounded-xl bg-admin-input-bg hover:bg-admin-card-hover text-admin-text border border-admin-border transition-all text-sm font-bold cursor-pointer"><Edit2 size={16} /> Sửa</button>
-                  <button onClick={() => handleDeleteProject(proj.id)} className="flex items-center justify-center gap-2 py-3 rounded-xl bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white transition-all text-sm font-bold border border-red-500/20 cursor-pointer"><Trash2 size={16} /> Xóa</button>
+                <div className="grid grid-cols-3 gap-2.5 mt-auto">
+                  <button type="button" onClick={() => handleUpdateProject(proj.id, { ...proj, isHidden: !proj.isHidden })} className={`flex items-center justify-center gap-1.5 py-3 rounded-xl transition-all text-xs font-bold border cursor-pointer ${proj.isHidden ? 'bg-amber-500/10 text-amber-400 border-amber-500/20 hover:bg-amber-500 hover:text-white' : 'bg-admin-input-bg hover:bg-admin-card-hover text-admin-text border-admin-border'}`}>
+                    {proj.isHidden ? <Eye size={14} /> : <EyeOff size={14} />}
+                    <span>{proj.isHidden ? 'Hiện' : 'Ẩn'}</span>
+                  </button>
+                  <button type="button" onClick={() => handleEditClick(proj)} className="flex items-center justify-center gap-1.5 py-3 rounded-xl bg-admin-input-bg hover:bg-admin-card-hover text-admin-text border border-admin-border transition-all text-xs font-bold cursor-pointer"><Edit2 size={14} /> Sửa</button>
+                  <button type="button" onClick={() => handleDeleteProject(proj.id)} className="flex items-center justify-center gap-1.5 py-3 rounded-xl bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white transition-all text-xs font-bold border border-red-500/20 cursor-pointer"><Trash2 size={14} /> Xóa</button>
                 </div>
               </div>
             </motion.div>

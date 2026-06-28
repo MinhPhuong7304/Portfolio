@@ -137,7 +137,8 @@ export const Project = sequelize.define('Project', {
   bugReport_vi: { type: DataTypes.TEXT },
   bugReport_en: { type: DataTypes.TEXT },
   automationResults_vi: { type: DataTypes.TEXT },
-  automationResults_en: { type: DataTypes.TEXT }
+  automationResults_en: { type: DataTypes.TEXT },
+  isHidden: { type: DataTypes.BOOLEAN, defaultValue: false }
 });
 
 export const Certificate = sequelize.define('Certificate', {
@@ -145,7 +146,8 @@ export const Certificate = sequelize.define('Certificate', {
   title_en: { type: DataTypes.STRING, allowNull: false },
   issuer: { type: DataTypes.STRING, allowNull: false },
   date: { type: DataTypes.STRING },
-  link: { type: DataTypes.STRING }
+  link: { type: DataTypes.STRING },
+  isHidden: { type: DataTypes.BOOLEAN, defaultValue: false }
 });
 
 export const Message = sequelize.define('Message', {

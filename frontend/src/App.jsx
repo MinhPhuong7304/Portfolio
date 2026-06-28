@@ -211,7 +211,7 @@ function App() {
   const projectPathMatch = currentPath.match(/^\/project\/(\d+)/);
   if (projectPathMatch) {
     const projectId = parseInt(projectPathMatch[1], 10);
-    const project = projects.find(p => p.id === projectId);
+    const project = projects.find(p => p.id === projectId && !p.isHidden);
     if (project) {
       return (
         <ProjectDetail 
@@ -279,8 +279,8 @@ function App() {
               mode={mode} 
               text={textProps} 
               lang={lang}
-              projectsCount={projects.length}
-              certsCount={certificates.length}
+              projectsCount={projects.filter(p => !p.isHidden).length}
+              certsCount={certificates.filter(c => !c.isHidden).length}
               avatar={profile.avatar}
               profile={profile}
             />
@@ -300,8 +300,8 @@ function App() {
               mode={mode} 
               text={textProps} 
               lang={lang}
-              projects={projects}
-              certificates={certificates}
+              projects={projects.filter(p => !p.isHidden)}
+              certificates={certificates.filter(c => !c.isHidden)}
               skills={skills}
               onOpenProject={(proj) => navigate('/project/' + proj.id)}
             />

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Plus, Edit2, Trash2, Calendar, Award, ExternalLink, FileUp, Loader2 } from 'lucide-react';
+import { Plus, Edit2, Trash2, Calendar, Award, ExternalLink, FileUp, Loader2, Eye, EyeOff } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { API_BASE_URL } from '../../../config';
 
@@ -210,11 +210,16 @@ export default function CertificatesTab({
           {certificates.map(cert => (
             <div 
               key={cert.id} 
-              className="bg-admin-card border border-admin-border rounded-2xl p-6 flex flex-col justify-between hover:border-admin-border-strong transition-all relative group"
+              className={`bg-admin-card border rounded-2xl p-6 flex flex-col justify-between hover:border-admin-border-strong transition-all relative group ${cert.isHidden ? 'border-amber-500/30 opacity-75' : 'border-admin-border'}`}
             >
               <div className="flex items-start gap-4 mb-4">
-                <div className="w-12 h-12 rounded-2xl bg-admin-accent/10 border border-admin-accent/20 flex items-center justify-center text-admin-accent shrink-0 shadow-inner">
+                <div className="w-12 h-12 rounded-2xl bg-admin-accent/10 border border-admin-accent/20 flex items-center justify-center text-admin-accent shrink-0 shadow-inner relative">
                   <Award size={24} />
+                  {cert.isHidden && (
+                    <div className="absolute -bottom-1 -right-1 bg-amber-500 text-white p-0.5 rounded-md shadow-md">
+                      <EyeOff size={10} />
+                    </div>
+                  )}
                 </div>
                 <div className="flex-1 min-w-0">
                   <h4 className="text-lg font-bold text-admin-text leading-snug truncate" title={cert.title_vi}>
@@ -253,6 +258,13 @@ export default function CertificatesTab({
                 </div>
                 
                 <div className="flex gap-2">
+                  <button 
+                    onClick={() => handleUpdateCertificate(cert.id, { ...cert, isHidden: !cert.isHidden })} 
+                    className={`p-2 rounded-lg border cursor-pointer transition-all ${cert.isHidden ? 'bg-amber-500/10 text-amber-500 border-amber-500/20 hover:bg-amber-500 hover:text-white' : 'bg-admin-input-bg text-admin-muted hover:text-admin-accent border-admin-border hover:bg-admin-card-hover'}`}
+                    title={cert.isHidden ? "Hiện chứng chỉ" : "Ẩn chứng chỉ"}
+                  >
+                    {cert.isHidden ? <Eye size={14} /> : <EyeOff size={14} />}
+                  </button>
                   <button 
                     onClick={() => handleEditClick(cert)} 
                     className="p-2 bg-admin-input-bg text-admin-muted hover:text-admin-accent rounded-lg border border-admin-border cursor-pointer hover:bg-admin-card-hover transition-all"
