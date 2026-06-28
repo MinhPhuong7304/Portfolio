@@ -2,6 +2,10 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import path from 'path';
+import dns from 'dns';
+
+// Force Node.js to prefer IPv4 over IPv6 for DNS resolution to prevent ENETUNREACH errors on Render/Supabase
+dns.setDefaultResultOrder('ipv4first');
 import { fileURLToPath } from 'url';
 import { initDB } from './models/db.js';
 import apiRoutes from './routes/api.js';
