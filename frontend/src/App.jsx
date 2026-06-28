@@ -311,6 +311,7 @@ function App() {
               lang={lang}
               profile={profile}
               cvUrl={activeCvUrl}
+              mode={mode}
             />
           </main>
         </>

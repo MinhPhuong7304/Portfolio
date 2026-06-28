@@ -61,7 +61,7 @@ export default function Navbar({ currentLang, setLang, text, mode, theme, setThe
 
           <a 
             href={cvUrl || "/cv-tranminhphuong.pdf"} 
-            download={cvUrl ? cvUrl.split('/').pop() : "CV_TranMinhPhuong.pdf"}
+            download={cvUrl && !cvUrl.startsWith('data:') ? cvUrl.split('/').pop() : (mode === 'frontend' ? "CV_Frontend_TranMinhPhuong.pdf" : "CV_Tester_TranMinhPhuong.pdf")}
             className="nav-cv-btn"
           >
             <Download size={15} />
@@ -100,7 +100,7 @@ export default function Navbar({ currentLang, setLang, text, mode, theme, setThe
         ))}
         <a
           href={cvUrl || "/cv-tranminhphuong.pdf"} 
-          download={cvUrl ? cvUrl.split('/').pop() : "CV_TranMinhPhuong.pdf"}
+          download={cvUrl && !cvUrl.startsWith('data:') ? cvUrl.split('/').pop() : (mode === 'frontend' ? "CV_Frontend_TranMinhPhuong.pdf" : "CV_Tester_TranMinhPhuong.pdf")}
           className="nav-cv-btn mobile-cv-btn"
           onClick={() => setIsOpen(false)}
         >

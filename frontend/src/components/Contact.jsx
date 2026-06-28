@@ -33,7 +33,7 @@ const LinkedinIcon = () => (
   </svg>
 );
 
-export default function Contact({ text, lang, profile, cvUrl }) {
+export default function Contact({ text, lang, profile, cvUrl, mode }) {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [status, setStatus] = useState('idle'); // idle, sending, success, error
   const [errors, setErrors] = useState({});
@@ -128,7 +128,7 @@ export default function Contact({ text, lang, profile, cvUrl }) {
               <p className="cv-box-desc">{text.contact.cvText}</p>
               <a 
                 href={cvUrl || "/cv-tranminhphuong.pdf"} 
-                download={cvUrl ? cvUrl.split('/').pop() : "CV_TranMinhPhuong.pdf"} 
+                download={cvUrl && !cvUrl.startsWith('data:') ? cvUrl.split('/').pop() : (mode === 'frontend' ? "CV_Frontend_TranMinhPhuong.pdf" : "CV_Tester_TranMinhPhuong.pdf")} 
                 className="btn-primary cv-download-btn"
               >
                 <Download size={16} />
