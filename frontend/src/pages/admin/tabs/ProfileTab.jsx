@@ -200,7 +200,7 @@ export default function ProfileTab({ profile, setProfile, handleProfileSave }) {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
             <div>
-              <label className="block text-xs font-bold text-admin-muted mb-3 uppercase tracking-widest flex items-center gap-2"><FileText size={12}/> CV Lập trình Frontend (PDF)</label>
+              <label className="block text-xs font-bold text-admin-muted mb-3 uppercase tracking-widest flex items-center gap-2"><FileText size={12}/> CV Developer (Full Stack) (PDF)</label>
               <input type="file" accept="application/pdf" ref={cvFrontendInputRef} className="hidden" onChange={handleCvFrontendChange} />
               <button 
                 type="button" 
@@ -211,7 +211,7 @@ export default function ProfileTab({ profile, setProfile, handleProfileSave }) {
                   {cvFrontendFileName 
                     ? `✓ Đã chọn file: ${cvFrontendFileName}` 
                     : profile.cv_frontend 
-                      ? '✓ CV Frontend đã có trên hệ thống (Click để thay đổi...)' 
+                      ? '✓ CV Developer đã có trên hệ thống (Click để thay đổi...)' 
                       : 'Click để chọn file PDF...'}
                 </span>
                 <Edit2 size={16} />
@@ -249,11 +249,11 @@ export default function ProfileTab({ profile, setProfile, handleProfileSave }) {
           <div className="space-y-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div>
-                <label className="block text-xs font-bold text-admin-muted mb-3 uppercase tracking-widest">Mô tả phụ (Frontend - VI)</label>
+                <label className="block text-xs font-bold text-admin-muted mb-3 uppercase tracking-widest">Mô tả phụ (Developer - VI)</label>
                 <textarea rows="3" value={profile.subtitle_frontend_vi || ''} onChange={e => setProfile({...profile, subtitle_frontend_vi: e.target.value})} className="w-full bg-admin-input-bg border border-admin-border rounded-xl px-5 py-4 text-sm focus:border-admin-accent transition-colors text-admin-text resize-y focus:ring-1 focus:ring-admin-accent leading-relaxed" />
               </div>
               <div>
-                <label className="block text-xs font-bold text-admin-muted mb-3 uppercase tracking-widest">Mô tả phụ (Frontend - EN)</label>
+                <label className="block text-xs font-bold text-admin-muted mb-3 uppercase tracking-widest">Mô tả phụ (Developer - EN)</label>
                 <textarea rows="3" value={profile.subtitle_frontend_en || ''} onChange={e => setProfile({...profile, subtitle_frontend_en: e.target.value})} className="w-full bg-admin-input-bg border border-admin-border rounded-xl px-5 py-4 text-sm focus:border-admin-accent transition-colors text-admin-text resize-y focus:ring-1 focus:ring-admin-accent leading-relaxed" />
               </div>
             </div>
@@ -281,22 +281,22 @@ export default function ProfileTab({ profile, setProfile, handleProfileSave }) {
           <div className="space-y-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div>
-                <label className="block text-xs font-bold text-admin-muted mb-3 uppercase tracking-widest">Mục tiêu nghề nghiệp (Frontend - VI)</label>
+                <label className="block text-xs font-bold text-admin-muted mb-3 uppercase tracking-widest">Mục tiêu nghề nghiệp (Developer - VI)</label>
                 <textarea rows="3" value={profile.objective_frontend_vi || ''} onChange={e => setProfile({...profile, objective_frontend_vi: e.target.value})} className="w-full bg-admin-input-bg border border-admin-border rounded-xl px-5 py-4 text-sm focus:border-admin-accent transition-colors text-admin-text resize-y focus:ring-1 focus:ring-admin-accent leading-relaxed" />
               </div>
               <div>
-                <label className="block text-xs font-bold text-admin-muted mb-3 uppercase tracking-widest">Mục tiêu nghề nghiệp (Frontend - EN)</label>
+                <label className="block text-xs font-bold text-admin-muted mb-3 uppercase tracking-widest">Mục tiêu nghề nghiệp (Developer - EN)</label>
                 <textarea rows="3" value={profile.objective_frontend_en || ''} onChange={e => setProfile({...profile, objective_frontend_en: e.target.value})} className="w-full bg-admin-input-bg border border-admin-border rounded-xl px-5 py-4 text-sm focus:border-admin-accent transition-colors text-admin-text resize-y focus:ring-1 focus:ring-admin-accent leading-relaxed" />
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div>
-                <label className="block text-xs font-bold text-admin-muted mb-3 uppercase tracking-widest">Giới thiệu bản thân (Frontend - VI)</label>
+                <label className="block text-xs font-bold text-admin-muted mb-3 uppercase tracking-widest">Giới thiệu bản thân (Developer - VI)</label>
                 <textarea rows="4" value={profile.about_frontend_vi || ''} onChange={e => setProfile({...profile, about_frontend_vi: e.target.value})} className="w-full bg-admin-input-bg border border-admin-border rounded-xl px-5 py-4 text-sm focus:border-admin-accent transition-colors text-admin-text resize-y focus:ring-1 focus:ring-admin-accent leading-relaxed" />
               </div>
               <div>
-                <label className="block text-xs font-bold text-admin-muted mb-3 uppercase tracking-widest">Giới thiệu bản thân (Frontend - EN)</label>
+                <label className="block text-xs font-bold text-admin-muted mb-3 uppercase tracking-widest">Giới thiệu bản thân (Developer - EN)</label>
                 <textarea rows="4" value={profile.about_frontend_en || ''} onChange={e => setProfile({...profile, about_frontend_en: e.target.value})} className="w-full bg-admin-input-bg border border-admin-border rounded-xl px-5 py-4 text-sm focus:border-admin-accent transition-colors text-admin-text resize-y focus:ring-1 focus:ring-admin-accent leading-relaxed" />
               </div>
             </div>

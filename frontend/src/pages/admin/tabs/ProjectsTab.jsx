@@ -136,7 +136,7 @@ export default function ProjectsTab({ projects, handleAddProject, handleDeletePr
                 <div>
                   <label className="block text-xs font-bold text-admin-muted mb-3 uppercase">Danh mục</label>
                   <select value={formData.category} onChange={e => setFormData({...formData, category: e.target.value})} className="w-full bg-admin-input-bg border border-admin-border rounded-xl px-4 py-3 text-sm text-admin-text">
-                    <option value="frontend" className="bg-admin-sidebar text-admin-text">Lập trình Frontend</option>
+                    <option value="frontend" className="bg-admin-sidebar text-admin-text">Lập trình Developer (Full Stack)</option>
                     <option value="tester" className="bg-admin-sidebar text-admin-text">Kiểm thử (QA / Tester)</option>
                     <option value="design" className="bg-admin-sidebar text-admin-text">Thiết kế</option>
                   </select>

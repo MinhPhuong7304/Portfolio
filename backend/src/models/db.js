@@ -53,8 +53,8 @@ export const Profile = sequelize.define('Profile', {
   years_of_exp: { type: DataTypes.STRING, defaultValue: '2' },
   greeting_vi: { type: DataTypes.STRING, defaultValue: 'Xin chào, mình là' },
   greeting_en: { type: DataTypes.STRING, defaultValue: 'Hi there, I am' },
-  title_frontend_vi: { type: DataTypes.STRING, defaultValue: 'Frontend Developer' },
-  title_frontend_en: { type: DataTypes.STRING, defaultValue: 'Frontend Developer' },
+  title_frontend_vi: { type: DataTypes.STRING, defaultValue: 'Full Stack Developer' },
+  title_frontend_en: { type: DataTypes.STRING, defaultValue: 'Full Stack Developer' },
   title_tester_vi: { type: DataTypes.STRING, defaultValue: 'QA / QC / Software Tester' },
   title_tester_en: { type: DataTypes.STRING, defaultValue: 'QA / QC / Software Tester' },
   subtitle_frontend_vi: { type: DataTypes.TEXT },
@@ -169,16 +169,16 @@ export const initDB = async () => {
     if (count === 0) {
       await Profile.create({
         name: 'Trần Minh Phương',
-        subtitle_frontend_vi: 'Đam mê thiết kế và xây dựng những giao diện người dùng (UI/UX) đẹp mắt, tương tác mượt mà và tối ưu hóa hiệu năng sản phẩm.',
-        subtitle_frontend_en: 'Passionate about designing and building beautiful, smooth user interfaces (UI/UX) with optimized web performance.',
+        subtitle_frontend_vi: 'Đam mê thiết kế, xây dựng và tối ưu hóa các ứng dụng web toàn diện (Full Stack), giao diện người dùng mượt mà cùng hệ thống backend tối ưu.',
+        subtitle_frontend_en: 'Passionate about building comprehensive web applications (Full Stack), developing smooth user interfaces (UI/UX) combined with robust backend services.',
         subtitle_tester_vi: 'Tập trung đảm bảo chất lượng và độ tin cậy của phần mềm thông qua các phương pháp kiểm thử thủ công và tự động hóa toàn diện.',
         subtitle_tester_en: 'Focused on ensuring software quality and reliability through comprehensive manual testing and test automation methodologies.',
-        about_frontend_vi: 'Mình là một lập trình viên Frontend đam mê sáng tạo mã nguồn và xây dựng các sản phẩm web thực tế. Với sự hiểu biết vững vàng về JavaScript và ReactJS, mình luôn mong muốn mang lại những trang web mượt mà, dễ sử dụng cho người dùng.',
-        about_frontend_en: 'I am a passionate Frontend Developer who loves writing clean code and creating real-world web applications. With solid knowledge of JavaScript and ReactJS, I aim to deliver smooth, user-friendly experiences.',
+        about_frontend_vi: 'Mình là một lập trình viên Full Stack đam mê sáng tạo mã nguồn và xây dựng các sản phẩm web thực tế. Với sự hiểu biết vững vàng về cả Frontend và Backend, mình luôn mong muốn mang lại những hệ thống toàn diện, mượt mà và tối ưu.',
+        about_frontend_en: 'I am a passionate Full Stack Developer who loves writing clean code and creating real-world web applications. With solid knowledge of both Frontend and Backend, I aim to deliver comprehensive, high-performing web solutions.',
         about_tester_vi: 'Là một QA/Tester, mục tiêu của mình là tìm kiếm lỗi sớm và tối ưu quy trình phát triển sản phẩm. Mình yêu thích công việc phân tích nghiệp vụ, lập tài liệu kiểm thử chi tiết và viết các kịch bản test tự động.',
         about_tester_en: 'As a QA/Tester, my goal is to catch bugs early and optimize the development cycle. I enjoy business requirement analysis, creating detailed test documentation, and writing automated test scripts.',
-        objective_frontend_vi: 'Trở thành một Frontend Developer chuyên nghiệp, nghiên cứu và làm chủ các công nghệ mới để đem lại các sản phẩm web tối ưu về mặt trải nghiệm và kỹ thuật.',
-        objective_frontend_en: 'To become a professional Frontend Developer, researching and mastering new web technologies to deliver technically optimized and user-friendly web products.',
+        objective_frontend_vi: 'Trở thành một Full Stack Developer chuyên nghiệp, nghiên cứu và làm chủ các công nghệ mới để đem lại các sản phẩm web tối ưu về mặt trải nghiệm và kỹ thuật.',
+        objective_frontend_en: 'To become a professional Full Stack Developer, researching and mastering new web technologies to deliver technically optimized and user-friendly web products.',
         objective_tester_vi: 'Trở thành một QA/Tester vững vàng, cải thiện chất lượng sản phẩm bằng cách lập quy trình test chuẩn hóa và xây dựng các hệ thống kiểm thử tự động hiệu quả.',
         objective_tester_en: 'To become a robust QA/Tester, enhancing product quality by establishing standardized test cycles and building efficient automated test suites.'
       });

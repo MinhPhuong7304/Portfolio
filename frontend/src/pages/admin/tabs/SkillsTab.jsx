@@ -142,7 +142,7 @@ export default function SkillsTab({ skills, handleAddSkill, handleDeleteSkill, h
                 : 'text-admin-muted hover:text-admin-text'
             }`}
           >
-            Frontend ({skills.filter(s => s.type === 'frontend').length})
+            Developer ({skills.filter(s => s.type === 'frontend').length})
           </button>
           <button
             type="button"
@@ -197,7 +197,7 @@ export default function SkillsTab({ skills, handleAddSkill, handleDeleteSkill, h
                 <div>
                   <label className="block text-xs font-bold text-admin-muted mb-3 uppercase tracking-widest">Danh mục</label>
                   <select value={newSkill.type} onChange={e => setNewSkill({...newSkill, type: e.target.value})} className="w-full bg-admin-input-bg border border-admin-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-admin-accent transition-colors text-admin-text appearance-none cursor-pointer">
-                    <option value="frontend" className="bg-admin-sidebar text-admin-text">Lập trình Frontend</option>
+                    <option value="frontend" className="bg-admin-sidebar text-admin-text">Lập trình Developer (Full Stack)</option>
                     <option value="tester" className="bg-admin-sidebar text-admin-text">Kiểm thử (QA / Tester)</option>
                   </select>
                 </div>
@@ -303,7 +303,7 @@ export default function SkillsTab({ skills, handleAddSkill, handleDeleteSkill, h
                     <div>
                       <label className="block text-[10px] font-bold text-admin-muted mb-1.5 uppercase">Danh mục</label>
                       <select value={editFormData.type} onChange={e => setEditFormData({...editFormData, type: e.target.value})} className="w-full bg-admin-input-bg border border-admin-border rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-admin-accent transition-colors text-admin-text appearance-none cursor-pointer">
-                        <option value="frontend" className="bg-admin-sidebar text-admin-text">Frontend</option>
+                        <option value="frontend" className="bg-admin-sidebar text-admin-text">Developer (Full Stack)</option>
                         <option value="tester" className="bg-admin-sidebar text-admin-text">QA / Tester</option>
                       </select>
                     </div>

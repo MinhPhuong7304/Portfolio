@@ -10,9 +10,9 @@ export const portfolioData = {
     hero: {
       greeting: "Xin chào, mình là",
       name: "Trần Minh Phương",
-      titleFrontend: "Frontend Developer",
+      titleFrontend: "Full Stack Developer",
       titleTester: "QA / QC / Software Tester",
-      subtitleFrontend: "Đam mê thiết kế và xây dựng những giao diện người dùng (UI/UX) đẹp mắt, tương tác mượt mà và tối ưu hóa hiệu năng sản phẩm.",
+      subtitleFrontend: "Đam mê thiết kế, xây dựng và tối ưu hóa các ứng dụng web toàn diện (Full Stack), giao diện người dùng mượt mà cùng hệ thống backend tối ưu.",
       subtitleTester: "Tập trung đảm bảo chất lượng và độ tin cậy của phần mềm thông qua các phương pháp kiểm thử thủ công và tự động hóa toàn diện.",
       toggleFrontend: "Góc nhìn Dev",
       toggleTester: "Góc nhìn Tester",
@@ -24,7 +24,7 @@ export const portfolioData = {
       title: "Về Mình",
       frontend: {
         paragraphs: [
-          "Mình là một lập trình viên Frontend đam mê sáng tạo mã nguồn và xây dựng các sản phẩm web thực tế. Với sự hiểu biết vững vàng về JavaScript và ReactJS, mình luôn mong muốn mang lại những trang web mượt mà, dễ sử dụng cho người dùng.",
+          "Mình là một lập trình viên Full Stack đam mê sáng tạo mã nguồn và xây dựng các sản phẩm web thực tế. Với sự hiểu biết vững vàng về cả Frontend và Backend, mình luôn mong muốn mang lại những hệ thống toàn diện, mượt mà và tối ưu.",
           "Mỗi dự án đối với mình là một cơ hội để kết hợp giữa tư duy thiết kế thẩm mỹ và logic lập trình, đảm bảo giao diện luôn tương thích tốt nhất trên mọi loại thiết bị."
         ]
       },
@@ -130,9 +130,9 @@ export const portfolioData = {
     hero: {
       greeting: "Hi there, I am",
       name: "Tran Minh Phuong",
-      titleFrontend: "Frontend Developer",
+      titleFrontend: "Full Stack Developer",
       titleTester: "QA / QC / Software Tester",
-      subtitleFrontend: "Passionate about designing and building beautiful, smooth user interfaces (UI/UX) with optimized web performance.",
+      subtitleFrontend: "Passionate about building comprehensive web applications (Full Stack), developing smooth user interfaces (UI/UX) combined with robust backend services.",
       subtitleTester: "Focused on ensuring software quality and reliability through comprehensive manual testing and test automation methodologies.",
       toggleFrontend: "Developer View",
       toggleTester: "Tester View",
@@ -144,7 +144,7 @@ export const portfolioData = {
       title: "About Me",
       frontend: {
         paragraphs: [
-          "I am a passionate Frontend Developer who loves writing clean code and creating real-world web applications. With solid knowledge of JavaScript and ReactJS, I aim to deliver smooth, user-friendly experiences.",
+          "I am a passionate Full Stack Developer who loves writing clean code and creating real-world web applications. With solid knowledge of both Frontend and Backend, I aim to deliver comprehensive, high-performing web solutions.",
           "Every project is an opportunity for me to merge creative design with programming logic, ensuring responsive designs that function flawlessly across all devices."
         ]
       },
