@@ -3,6 +3,7 @@ import {
   ExternalLink, FileSpreadsheet, Code, CheckCircle, 
   Award, Briefcase, Cpu, Eye, ArrowRight 
 } from 'lucide-react';
+import { API_BASE_URL } from '../config';
 
 function MonitorScreen({ demo, title }) {
   const [scale, setScale] = useState(0.35);
@@ -55,6 +56,17 @@ function MonitorScreen({ demo, title }) {
 export default function Projects({ mode, text, lang, projects, certificates, skills = [], onOpenProject }) {
   const [activeTab, setActiveTab] = useState('projects'); // 'projects', 'certificates', 'techstack'
   const [subFilter, setSubFilter] = useState('all'); // 'all', 'frontend', 'tester', 'design', 'editing'
+
+  const getImageUrl = (url) => {
+    if (!url) return '';
+    const cleanUrl = url.replace(/\\/g, '/');
+    if (cleanUrl.startsWith('http://') || cleanUrl.startsWith('https://') || cleanUrl.startsWith('data:')) {
+      return cleanUrl;
+    }
+    const base = API_BASE_URL.endsWith('/') ? API_BASE_URL.slice(0, -1) : API_BASE_URL;
+    const path = cleanUrl.startsWith('/') ? cleanUrl : `/${cleanUrl}`;
+    return `${base}${path}`;
+  };
 
   // Filter projects based on main mode and active subfilter
   const filteredProjects = projects.filter(project => {
@@ -238,7 +250,7 @@ export default function Projects({ mode, text, lang, projects, certificates, ski
                         ) : project.imageUrl ? (
                           <div 
                             className="w-full h-full bg-cover bg-center"
-                            style={{ backgroundImage: `url(${project.imageUrl})` }}
+                            style={{ backgroundImage: `url(${getImageUrl(project.imageUrl)})` }}
                           />
                         ) : (
                           <div className="screen-overlay">
