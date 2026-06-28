@@ -135,7 +135,7 @@ export default function About({ mode, text, lang, projectsCount, certsCount, ava
             <span className="stat-title">{lang === 'vi' ? 'TỔNG DỰ ÁN' : 'TOTAL PROJECTS'}</span>
             <p className="stat-desc">{lang === 'vi' ? 'Dự án đã triển khai' : 'Web, automation & design work'}</p>
           </div>
-          <span className="stat-number">{projectsCount || 5}</span>
+          <span className="stat-number">{projectsCount ?? 5}</span>
         </div>
 
         <div className="stat-card glass-card">
@@ -146,7 +146,7 @@ export default function About({ mode, text, lang, projectsCount, certsCount, ava
             <span className="stat-title">{lang === 'vi' ? 'CHỨNG CHỈ' : 'CERTIFICATES'}</span>
             <p className="stat-desc">{lang === 'vi' ? 'Năng lực chuyên môn' : 'Professional skills validated'}</p>
           </div>
-          <span className="stat-number">{certsCount || 2}</span>
+          <span className="stat-number">{certsCount ?? 2}</span>
         </div>
 
         <div className="stat-card glass-card">
