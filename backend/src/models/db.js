@@ -3,20 +3,45 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const { DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD } = process.env;
+const { DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD, DATABASE_URL } = process.env;
 
-const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
-  host: DB_HOST,
-  port: DB_PORT || 5432,
-  dialect: 'postgres',
-  logging: false, // Turn off query logs for clean terminal output
-  pool: {
-    max: 5,
-    min: 0,
-    acquire: 30000,
-    idle: 10000
-  }
-});
+const isProduction = process.env.NODE_ENV === 'production';
+
+const sequelize = DATABASE_URL
+  ? new Sequelize(DATABASE_URL, {
+      dialect: 'postgres',
+      logging: false,
+      dialectOptions: isProduction ? {
+        ssl: {
+          require: true,
+          rejectUnauthorized: false
+        }
+      } : {},
+      pool: {
+        max: 5,
+        min: 0,
+        acquire: 30000,
+        idle: 10000
+      }
+    })
+  : new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
+      host: DB_HOST,
+      port: DB_PORT || 5432,
+      dialect: 'postgres',
+      logging: false,
+      dialectOptions: isProduction ? {
+        ssl: {
+          require: true,
+          rejectUnauthorized: false
+        }
+      } : {},
+      pool: {
+        max: 5,
+        min: 0,
+        acquire: 30000,
+        idle: 10000
+      }
+    });
 
 // Define Models
 export const Profile = sequelize.define('Profile', {
