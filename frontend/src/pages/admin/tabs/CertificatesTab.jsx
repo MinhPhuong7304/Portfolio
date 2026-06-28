@@ -210,21 +210,28 @@ export default function CertificatesTab({
           {certificates.map(cert => (
             <div 
               key={cert.id} 
-              className={`bg-admin-card border rounded-2xl p-6 flex flex-col justify-between hover:border-admin-border-strong transition-all relative group ${cert.isHidden ? 'border-amber-500/30 opacity-75' : 'border-admin-border'}`}
+              className={`bg-admin-card border rounded-2xl p-6 flex flex-col justify-between hover:border-admin-border-strong transition-all relative group ${cert.isHidden ? 'border-red-500/30 bg-red-500/5 opacity-55 saturate-50' : 'border-admin-border'}`}
             >
               <div className="flex items-start gap-4 mb-4">
                 <div className="w-12 h-12 rounded-2xl bg-admin-accent/10 border border-admin-accent/20 flex items-center justify-center text-admin-accent shrink-0 shadow-inner relative">
                   <Award size={24} />
                   {cert.isHidden && (
-                    <div className="absolute -bottom-1 -right-1 bg-amber-500 text-white p-0.5 rounded-md shadow-md">
+                    <div className="absolute -bottom-1 -right-1 bg-red-500 text-white p-0.5 rounded-md shadow-md">
                       <EyeOff size={10} />
                     </div>
                   )}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h4 className="text-lg font-bold text-admin-text leading-snug truncate" title={cert.title_vi}>
-                    {cert.title_vi}
-                  </h4>
+                  <div className="flex items-center gap-2">
+                    <h4 className="text-lg font-bold text-admin-text leading-snug truncate" title={cert.title_vi}>
+                      {cert.title_vi}
+                    </h4>
+                    {cert.isHidden && (
+                      <span className="px-2 py-0.5 rounded bg-red-500/20 text-red-400 text-[10px] font-bold border border-red-500/30 flex items-center gap-1 shrink-0 animate-pulse">
+                        <EyeOff size={10} /> Đang ẩn
+                      </span>
+                    )}
+                  </div>
                   <p className="text-xs text-admin-muted font-semibold truncate mb-2">{cert.title_en}</p>
                   
                   <div className="space-y-1.5 mt-2">

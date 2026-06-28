@@ -258,14 +258,14 @@ export default function ProjectsTab({ projects, handleAddProject, handleDeletePr
       <motion.div variants={container} initial="hidden" animate="show" className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <AnimatePresence>
           {projects.map((proj) => (
-            <motion.div variants={item} layout key={proj.id} exit={{ opacity: 0, scale: 0.9 }} whileHover={{ y: -8 }} className={`bg-admin-card rounded-3xl overflow-hidden border transition-all flex flex-col group shadow-xl shadow-black/50 ${proj.isHidden ? 'border-amber-500/30 opacity-75' : 'border-admin-border hover:border-admin-border-strong'}`}>
+            <motion.div variants={item} layout key={proj.id} exit={{ opacity: 0, scale: 0.9 }} whileHover={{ y: -8 }} className={`bg-admin-card rounded-3xl overflow-hidden border transition-all flex flex-col group shadow-xl shadow-black/50 ${proj.isHidden ? 'border-red-500/30 opacity-55 saturate-50' : 'border-admin-border hover:border-admin-border-strong'}`}>
               <div className="h-56 bg-admin-input-bg w-full relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-admin-accent/20 to-transparent group-hover:scale-110 transition-transform duration-700"></div>
                 <div className="absolute inset-0 flex items-center justify-center backdrop-blur-[2px]">
                    <span className="text-admin-text/20 font-black text-4xl tracking-widest uppercase rotate-[-5deg]">{proj.category}</span>
                 </div>
                 {proj.isHidden && (
-                  <div className="absolute top-5 left-5 bg-amber-500 text-white px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-lg z-20">
+                  <div className="absolute top-5 left-5 bg-red-500 text-white px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-lg z-20">
                     <EyeOff size={12} />
                     <span>Đang ẩn</span>
                   </div>
@@ -280,6 +280,12 @@ export default function ProjectsTab({ projects, handleAddProject, handleDeletePr
                 <p className="text-admin-muted text-sm line-clamp-2 mb-6 leading-relaxed font-medium">{proj.description_vi}</p>
                 <div className="flex flex-wrap gap-2 mb-8">
                   <span className="px-3 py-1.5 rounded-lg bg-admin-accent/20 text-admin-accent text-xs font-bold border border-admin-accent/30">{proj.category}</span>
+                  {proj.isHidden && (
+                    <span className="px-3 py-1.5 rounded-lg bg-red-500/20 text-red-400 text-xs font-bold border border-red-500/30 flex items-center gap-1.5 animate-pulse">
+                      <EyeOff size={12} />
+                      Đang ẩn trên trang chủ
+                    </span>
+                  )}
                   {proj.tags && Array.isArray(proj.tags) && proj.tags.map((tag, i) => (
                     <span key={i} className="px-3 py-1.5 rounded-lg bg-admin-input-bg text-admin-text-secondary text-xs font-bold border border-admin-border">{tag}</span>
                   ))}
