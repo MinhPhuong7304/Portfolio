@@ -130,7 +130,7 @@ export default function Projects({ mode, text, lang, projects, certificates, ski
             className={`subfilter-btn ${subFilter === 'frontend' ? 'active' : ''}`}
             onClick={() => setSubFilter('frontend')}
           >
-            Frontend Dev
+            Developer
           </button>
           <button 
             className={`subfilter-btn ${subFilter === 'tester' ? 'active' : ''}`}
@@ -167,7 +167,7 @@ export default function Projects({ mode, text, lang, projects, certificates, ski
                 <div className="project-card-content" style={{ marginBottom: 0 }}>
                   <div className="project-card-header">
                     <div className="project-accent-indicator" />
-                    <span className="logo-badge">{project.category.toUpperCase()}</span>
+                    <span className="logo-badge">{project.category === 'frontend' ? 'DEVELOPER' : project.category.toUpperCase()}</span>
                   </div>
                   
                   <h3 className="project-title" style={{ fontSize: '24px', marginBottom: '12px' }}>
